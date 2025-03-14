@@ -51,8 +51,10 @@ public class SpaceObjects {
             objTexture.add(new Texture("image/object/Planet_03.png"));
             objTexture.add(new Texture("image/object/Planet_04.png"));
         }else if(name.equals("dust")){
-            objTexture.add(new Texture("image/object/dust_1.png"));
+           // objTexture.add(new Texture("image/object/dust_1.png"));
             objTexture.add(new Texture("image/object/dust_2.png"));
+        }else if(name.equals("star")){
+            objTexture.add(new Texture("image/object/star1.png"));
         }
     }
 
@@ -63,7 +65,7 @@ public class SpaceObjects {
     }
 
     public void controlObjectRender(float delta) {
-        if (rand.nextInt(400) < 1) {  // ~3% chance per frame
+        if (rand.nextInt(400) < 1) {  ////////////////////// understanding the logic////////////////
             objectList.add(new SpaceObject(objTexture,this.speed,this.size));
         }
 

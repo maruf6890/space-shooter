@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.maruf.sust.Main;
 
 public class Background {
-    private Texture img;
+    private Texture img,img2;
     private float baseSpeed;
     private float extraSpeed;
     private float speedPercent;
@@ -16,6 +16,7 @@ public class Background {
     public Background(Main game, String location, float speed, float speedPercent) {
         this.game = game;
         this.img = new Texture(location);
+        this.img2 = new Texture("image/bg/space-1.png");
         this.baseSpeed = speed;
         this.speedPercent = speedPercent;
 
@@ -26,7 +27,7 @@ public class Background {
     // Render both images for smooth scrolling
     public void renderBg() {
         game.batch.draw(img, 0, y1, 1280, 720);
-        game.batch.draw(img, 0, y2, 1280, 720);
+        game.batch.draw(img2, 0, y2, 1280, 720);
     }
 
     // Move backgrounds down and reset when out of bounds
