@@ -1,25 +1,21 @@
 package com.maruf.sust.utils;
 
+import com.maruf.sust.Main;
 import com.maruf.sust.entities.SpaceShip;
 
+import java.util.ArrayList;
+
 public class Shop {
+    Main game;
     Account playerAccount;
-   public Shop(Account ac){
-        ac= playerAccount;
+    ArrayList<SpaceShip> spaceShips ;
+
+    public Shop(Main game, Account ac) {
+        this.game = game;
+        this.playerAccount = ac;
+
+
+
     }
-
-
-
-    //create two ship
-SpaceShip alphaShip= new SpaceShip();
-   SpaceShip omegaShip= new SpaceShip();
-
-
-
-    //default ship ship 1
-
-    //buy ship2;
-    void buyS
-
 
 }

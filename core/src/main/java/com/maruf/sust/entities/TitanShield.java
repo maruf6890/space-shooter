@@ -28,6 +28,7 @@ abstract class TitanShield extends PowerUps{
             @Override
             public void run() {
                 ship.setHasShield(false);
+                ship.setShieldStrength(0);
                 System.out.println("Shield is Deactivated");
             }
         },5);

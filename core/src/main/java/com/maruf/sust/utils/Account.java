@@ -16,6 +16,7 @@ public class Account {
         this.score = 0;
         this.highScore = 0;
         this.balance = 0;
+
     }
 
     // Getter methods

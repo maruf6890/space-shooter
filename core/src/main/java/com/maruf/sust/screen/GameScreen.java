@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.maruf.sust.Main;
+import com.maruf.sust.entities.SpaceShip;
 import com.maruf.sust.utils.Account;
 
 public class GameScreen implements Screen {
@@ -15,10 +16,11 @@ public class GameScreen implements Screen {
     Background bg1;
     SpaceObjects planets,stars;
     SpaceObjects dusts;
-    private Texture player;   // Player spaceship
 
-    private Vector2 playerPosition;  // Player position
-    private float playerSpeed = 300; // Speed of movement
+    //player
+    SpaceShip ship;
+    Texture test;
+
 
     //Account
     Account playerAccount;
@@ -29,11 +31,10 @@ public class GameScreen implements Screen {
         planets= new SpaceObjects(game,"planet",50,50);
         dusts= new SpaceObjects(game,"dust",30,200);
         stars =new SpaceObjects(game,"star",80,30);
+        ship= game.alphaShip;
+        test = new Texture("image/ship/ship5.png");
 
-        player = new Texture("image/ship/ship5.png");    // Load player texture
 
-        // Initialize player position (center-bottom of screen)
-        playerPosition = new Vector2(640 - player.getWidth() / 2, 50);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        handleInput(delta);
+        ship.controlShip(delta);
         bg1.controlBg(delta);
         planets.controlObjectRender(delta);
         dusts.controlObjectRender(delta);
@@ -53,32 +54,10 @@ public class GameScreen implements Screen {
         planets.renderObject();
         dusts.renderObject();
         stars.renderObject();
-        game.batch.draw(player, playerPosition.x, playerPosition.y,100,100); // Draw player
+        ship.renderShip();
         game.batch.end();
     }
 
-    private void handleInput(float delta) {
-        // Move left
-        if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.LEFT)) {
-            playerPosition.x -= playerSpeed * delta;
-        }
-        // Move right
-        if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.RIGHT)) {
-            playerPosition.x += playerSpeed * delta;
-        }
-        // Move up
-        if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.UP)) {
-            playerPosition.y += playerSpeed * delta;
-        }
-        // Move down
-        if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.DOWN)) {
-            playerPosition.y -= playerSpeed * delta;
-        }
-
-        // Keep player within screen bounds
-        playerPosition.x = Math.max(0, Math.min(1280 - 100, playerPosition.x));
-        playerPosition.y = Math.max(0, Math.min(720 -100, playerPosition.y));
-    }
 
     @Override
     public void resize(int width, int height) {}
@@ -94,7 +73,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+    test.dispose();
 
-        player.dispose();
     }
 }

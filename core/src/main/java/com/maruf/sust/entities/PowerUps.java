@@ -40,7 +40,8 @@ abstract class PowerUps {
     // Control power-ups (check for collision, move down)
     public void controlPowerUps(float delta) {
         if (this.bound.overlaps(ship.bound)) {
-            onActive();  // Activate power-up if collided
+            onActive();
+            dispose();
         }
 
         // Move power-up down the screen
