@@ -8,14 +8,13 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.maruf.sust.Main;
+import com.maruf.sust.weapen.PlayerBullet;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 
-
-
-
-
-
- class Thruster {
+class Thruster {
      Main game;
     private Texture[] thrusterFrames;
     Animation<TextureRegion> thrusterAnimation;
@@ -67,6 +66,10 @@ import com.maruf.sust.Main;
         }
     }
 }
+
+
+
+
 public class SpaceShip {
   public Texture img;
     Main game;
@@ -77,6 +80,14 @@ public class SpaceShip {
     public float x, y, size, speed;
     public Rectangle bound;
     Thruster t1;
+
+
+    //Bullet
+    ArrayList<PlayerBullet> bullets= new ArrayList<>();
+
+
+
+
 
     private boolean isUnlocked;
     private  int price;
@@ -237,8 +248,12 @@ public class SpaceShip {
 
     //control
     public void controlShip(float delta){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            shoot();
+        }
 
-
+        //update bullets
+        updateBullets(delta);
         t1.update(delta);
 
         // Move left
@@ -283,11 +298,41 @@ public class SpaceShip {
         }
     }
 
+    public void shoot(){
+
+        if(hasBeastMode){
+            bullets.add(new PlayerBullet(game,this.x+this.size/2,this.y+this.size/2,20,20,50,new Texture("image/effect/laser/4.png")));
+        }else{
+            bullets.add(new PlayerBullet(game,this.x+25,this.y+this.size,20,100,80,new Texture("image/effect/laser/01.png")));
+        }
+    }
+
+    public  void renderBullets(float delta){
+
+        for(PlayerBullet bullet: bullets){
+            bullet.renderBullet(delta);
+        }
+    }
+
+    public void updateBullets(float delta) {
+
+        Iterator<PlayerBullet> iterator = bullets.iterator();
+        while (iterator.hasNext()) {
+            PlayerBullet bullet = iterator.next();
+            bullet.updatePosition(delta);
+            if (!bullet.isActive()) {
+                iterator.remove(); // Remove inactive bullets
+            }
+        }
+    }
+
+
 
 
 
     //render ship
-    public void renderShip(){
+    public void renderShip( float delta){
+    renderBullets(delta);
    game.batch.draw(img,this.x,this.y,this.size, this.size);
    t1.render();
     }

@@ -8,7 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.maruf.sust.Main;
+import com.maruf.sust.entities.RandomShip;
+import com.maruf.sust.entities.SineShip;
 import com.maruf.sust.entities.SpaceShip;
+import com.maruf.sust.entities.ZigZagShip;
 import com.maruf.sust.utils.Account;
 
 public class GameScreen implements Screen {
@@ -21,7 +24,9 @@ public class GameScreen implements Screen {
     SpaceShip ship;
     Texture test;
 
-
+    RandomShip e1;
+    ZigZagShip e2;
+    SineShip c3;
     //Account
     Account playerAccount;
     public GameScreen(Main game,Account ac) {
@@ -33,8 +38,9 @@ public class GameScreen implements Screen {
         stars =new SpaceObjects(game,"star",80,30);
         ship= game.alphaShip;
         test = new Texture("image/ship/ship5.png");
-
-
+        e1= new RandomShip(this.game,0,0,40,0.5f,0.5f,0.1f,new Texture("image/ship/ship_1.png"));
+        e2= new ZigZagShip(this.game);
+        c3= new SineShip(this.game);
     }
 
     @Override
@@ -44,6 +50,9 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         ship.controlShip(delta);
         bg1.controlBg(delta);
+       if(e1.isAlive())  e1.update(delta);
+       e2.update(delta);
+    c3.update(delta);
         planets.controlObjectRender(delta);
         dusts.controlObjectRender(delta);
         stars.controlObjectRender(delta);
@@ -54,7 +63,10 @@ public class GameScreen implements Screen {
         planets.renderObject();
         dusts.renderObject();
         stars.renderObject();
-        ship.renderShip();
+        ship.renderShip(delta);
+        e1.render();
+        e2.render();
+        c3.render();
         game.batch.end();
     }
 
