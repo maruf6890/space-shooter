@@ -2,6 +2,8 @@ package com.maruf.sust.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.maruf.sust.Main;
+import com.maruf.sust.weapen.EnemyBullet;
+
 import java.util.Random;
 
 public class RandomShip extends EnemyShip {
@@ -12,11 +14,13 @@ public class RandomShip extends EnemyShip {
     private static final float STAND_TIME = 5f;
     private static final float MOVE_TIME = 5f;
 
-    public RandomShip(Main game, float x, float y, float size, float speedX, float speedY, float durability, Texture img) {
-        super(game, x, y, size, speedX, speedY, durability, img);
+    public RandomShip(Main game) {
+        super(game,0,0,40,0.5f,0.5f,0.1f,new Texture("image/ship/ship_1.png"));
         this.game = game;
         this.random = new Random();
         spawnOutsideScreen();
+        setPoint(15.5f);
+        setCash(1500);
     }
 
     private void spawnOutsideScreen() {
@@ -67,18 +71,23 @@ public class RandomShip extends EnemyShip {
         if (x < -100 || x > game.WIDTH + 100 || y < -100 || y > game.HEIGHT + 100) {
             isAlive = false;
         }
+        this.bound.setPosition(this.x,this.y);
+
+        this.updateBulletsPosition(delta);
     }
 
     @Override
-    public void render() {
+    public void render(float delta) {
         if(isAlive){
             game.batch.draw(img, this.x, this.y, this.size, this.size);
         }
+        this.renderBullets(delta);
 
     }
 
     @Override
     public void fireBullet() {
-        System.out.println("RandomShip fires a bullet!");
+        bullets.add(new EnemyBullet(game,this.x,this.y,80,50,new Texture("image/effect/laser/05.png")));
+
     }
 }

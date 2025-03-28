@@ -15,7 +15,10 @@ public class Main extends Game {
     public SpriteBatch batch;
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 720;
-
+    public float currentScore=0;
+    public float currentCash=0;
+    public float totalCash=0;
+    public float HighestScore=0;
 
    public Account playerAccount= new Account();
    public Shop shop= new Shop(this,playerAccount);

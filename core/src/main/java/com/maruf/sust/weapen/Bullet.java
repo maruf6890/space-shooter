@@ -12,11 +12,12 @@ abstract class Bullet {
     protected Main game;
     protected float x, y, speedX, speedY, size;
     private boolean isAnimated = false;
-    private Rectangle bound;
+    public Rectangle bound;
     private Texture img;
     private Animation<TextureRegion> bulletAnimation;
     private float stateTime = 0;
     private boolean isActive;
+    private float damage;
 
     public Bullet(Main game, float x, float y, float speedX, float speedY, float size) {
         this.x = x;
@@ -26,7 +27,8 @@ abstract class Bullet {
         this.size = size;
         this.game = game;
         this.isActive = true;
-        this.bound = new Rectangle(x, y, size, size);  // Initialize the bounding box
+        this.bound = new Rectangle(x, y, size, size);
+        this.damage=20;
     }
 
     public Bullet(Main game, float x, float y, float speedX, float speedY, float size, Texture img) {
@@ -42,8 +44,17 @@ abstract class Bullet {
 
     public void isOutScreen(){
         if(this.x<-this.size || this.y<-this.size || this.x>game.WIDTH+ this.size || this.y> game.HEIGHT+this.size)
-        deactivate();
+        {deactivate();
+        this.img.dispose();
+        }
+
     };
+    public boolean isOutOfScreen(){
+        return (this.x<-this.size || this.y<-this.size || this.x>game.WIDTH+ this.size || this.y> game.HEIGHT+this.size);
+    }
+    public float getDamageValue(){
+        return this.damage;
+    }
 
     abstract boolean isHit(Rectangle targetBound);
 
@@ -67,11 +78,19 @@ abstract class Bullet {
         return isActive;
     }
 
-    public void deactivate() {
-        isActive = false;
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
-    public Rectangle getBounds() {
-        return bound;
+    public void deactivate() {
+        isActive = false;
+        this.img.dispose();
     }
+
+
+
+
+
+
+
 }

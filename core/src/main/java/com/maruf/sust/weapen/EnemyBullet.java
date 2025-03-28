@@ -9,15 +9,17 @@ import com.maruf.sust.Main;
 
 public class EnemyBullet extends Bullet {
     private float directionX, directionY; // Direction towards player
-
-    public EnemyBullet(Main game, float x, float y, float speed, float size, Texture img, float playerX, float playerY) {
+    float shipX,shipY;
+    public EnemyBullet(Main game, float x, float y, float speed, float size, Texture img) {
         super(game, x, y, 0, 0, size, img);
-        calculateDirection(x, y, playerX, playerY, speed);
+        this.shipX=game.alphaShip.x;
+        this.shipY= game.alphaShip.y;
+        calculateDirection(x, y,shipX,shipY, speed);
     }
 
-    public EnemyBullet(Main game, float x, float y, float speed, float size, Animation<TextureRegion> bulletAnimation, float playerX, float playerY) {
+    public EnemyBullet(Main game, float x, float y, float speed, float size, Animation<TextureRegion> bulletAnimation) {
         super(game, x, y, 0, 0, size, bulletAnimation);
-        calculateDirection(x, y, playerX, playerY, speed);
+        calculateDirection(x, y, game.alphaShip.x,game.alphaShip.y, speed);
     }
 
     // Calculate the direction vector towards the player's initial position
@@ -39,13 +41,16 @@ public class EnemyBullet extends Bullet {
 
 
     @Override
-    boolean isHit(Rectangle targetBound) {
-        return getBounds().overlaps(targetBound);
+    public boolean isHit(Rectangle targetBound) {
+        return this.bound.overlaps(targetBound);
     }
 
     @Override
     public void updatePosition(float delta) {
-
+        x += speedX * delta;
+        y += speedY * delta;
+        isOutScreen();
+        this.bound.setPosition(this.x, this.y);
     }
 
 }

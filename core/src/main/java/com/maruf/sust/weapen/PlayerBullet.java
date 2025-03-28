@@ -18,12 +18,14 @@ public class PlayerBullet extends Bullet {
 
 
     @Override
-    boolean isHit(Rectangle targetBound) {
-        return getBounds().overlaps(targetBound);
+    public  boolean isHit(Rectangle targetBound) {
+        return this.bound.overlaps(targetBound);
+
     }
 
     @Override
     public  void updatePosition(float delta) {
         this.y+= delta*speedY;
+        this.bound.setPosition(this.x, this.y);
     }
 }

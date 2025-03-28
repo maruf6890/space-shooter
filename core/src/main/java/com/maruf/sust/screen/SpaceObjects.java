@@ -65,7 +65,7 @@ public class SpaceObjects {
     }
 
     public void controlObjectRender(float delta) {
-        if (rand.nextInt(400) < 1) {  ////////////////////// understanding the logic////////////////
+        if (rand.nextInt(1000) < 1) {  ////////////////////// understanding the logic////////////////
             objectList.add(new SpaceObject(objTexture,this.speed,this.size));
         }
 

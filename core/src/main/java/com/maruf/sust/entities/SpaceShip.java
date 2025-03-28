@@ -80,7 +80,7 @@ public class SpaceShip {
     public float x, y, size, speed;
     public Rectangle bound;
     Thruster t1;
-
+    public boolean isAlive;
 
     //Bullet
     ArrayList<PlayerBullet> bullets= new ArrayList<>();
@@ -101,10 +101,12 @@ public class SpaceShip {
     private float shieldStrength;
     private boolean hasShield;
 
+
+
     // Repair
     private boolean hasRecovery;
     private float repair;
-    private int mechaHealth;
+    private float mechaHealth;
 
     // Beast Mode
     private boolean hasBeastMode;
@@ -114,6 +116,8 @@ public class SpaceShip {
     private int weaponLevel;
 
     // Constructor
+
+
     public SpaceShip(Main game,String name, int type, float speed, float size, float x, float y, Texture imgLocation,int price, boolean isUnlocked) {
         this.game= game;
         this.name = name;
@@ -129,8 +133,8 @@ public class SpaceShip {
         this.hasShield = false;
         this.hasRecovery = false;
         this.weaponLevel = 1;
-
-
+        this.isAlive=true;
+        this.mechaHealth=100;
 
 
         this.size = size;
@@ -221,7 +225,7 @@ public class SpaceShip {
         this.repair = repair;
     }
 
-    public int getMechaHealth() {
+    public float getMechaHealth() {
         return mechaHealth;
     }
 
@@ -277,16 +281,10 @@ public class SpaceShip {
         this.x = Math.max(0, Math.min(1280 - 100, this.x));
         this.y = Math.max(0, Math.min(720 -100, this.y));
         t1.setThrusterPosition(this.x+this.size/2-30,this.y-40);
+        this.bound.setPosition(this.x, this.y);
     }
 
 
-    //take hit
-    public void takeHit() {
-        // cheak ll types of enemy
-        gettingDamage(1);
-
-
-    }
 
 
     //getting damage
@@ -296,15 +294,37 @@ public class SpaceShip {
         } else {
             this.mechaHealth -= (damage - (damage * (activeShip == 1 ? 0.1f : 0.2f)));
         }
+        if(mechaHealth<0){
+            this.isAlive=false;
+            dispose();
+        }
     }
 
+
+    //
+    //ceate animation
+    Animation<TextureRegion> generateAnimation(String... locations) {
+        Animation<TextureRegion> animationFrames;
+        TextureRegion[] textureFrames = new TextureRegion[locations.length];
+        int i=0;
+        for (String location : locations) {
+            textureFrames[i]=new TextureRegion(new Texture(location));
+            i++;
+        }
+        animationFrames = new Animation<>(0.1f, textureFrames);
+        return animationFrames;
+    }
     public void shoot(){
 
-        if(hasBeastMode){
-            bullets.add(new PlayerBullet(game,this.x+this.size/2,this.y+this.size/2,20,20,50,new Texture("image/effect/laser/4.png")));
-        }else{
-            bullets.add(new PlayerBullet(game,this.x+25,this.y+this.size,20,100,80,new Texture("image/effect/laser/01.png")));
+        if(isAlive){
+            if(hasBeastMode){
+                bullets.add(new PlayerBullet(game,this.x+this.size/2,this.y+this.size/2,20,20,50,new Texture("image/effect/laser/4.png")));
+            }else{
+
+                bullets.add(new PlayerBullet(game,this.x+25,this.y+this.size,20,100,80,new Texture("image/effect/laser/01.png" ) ));
+            }
         }
+
     }
 
     public  void renderBullets(float delta){
@@ -316,6 +336,8 @@ public class SpaceShip {
 
     public void updateBullets(float delta) {
 
+
+
         Iterator<PlayerBullet> iterator = bullets.iterator();
         while (iterator.hasNext()) {
             PlayerBullet bullet = iterator.next();
@@ -324,7 +346,24 @@ public class SpaceShip {
                 iterator.remove(); // Remove inactive bullets
             }
         }
+
+
     }
+    public void destroyEnemy(EnemyShip e){
+
+
+        for(PlayerBullet b: bullets){
+
+           if(b.isHit(e.bound)) {
+               b.deactivate();
+                e.takeDamage(b.getDamageValue());
+
+
+           }
+        }
+    }
+
+
 
 
 
@@ -333,8 +372,11 @@ public class SpaceShip {
     //render ship
     public void renderShip( float delta){
     renderBullets(delta);
-   game.batch.draw(img,this.x,this.y,this.size, this.size);
-   t1.render();
+    if(isAlive){
+        game.batch.draw(img,this.x,this.y,this.size, this.size);
+        t1.render();
+    }
+
     }
 
 
@@ -342,6 +384,7 @@ public class SpaceShip {
 
     public  void dispose(){
         t1.dispose();
+        this.img.dispose();
     }
 
 

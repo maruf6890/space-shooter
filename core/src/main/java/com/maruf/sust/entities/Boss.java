@@ -53,7 +53,7 @@ public class Boss extends EnemyShip {
     }
 
     @Override
-    public void render() {
+    public void render(float delta) {
         game.batch.draw(img, this.x, this.y, this.size, this.size);  // Render the boss
     }
 
