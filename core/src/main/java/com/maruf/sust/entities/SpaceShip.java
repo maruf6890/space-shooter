@@ -1,7 +1,9 @@
 package com.maruf.sust.entities;
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
@@ -115,8 +117,12 @@ public class SpaceShip {
     // Weapon Level
     private int weaponLevel;
 
+    //sound
+    Sound shootSound_01,explode;
+
     // Constructor
 
+    //
 
     public SpaceShip(Main game,String name, int type, float speed, float size, float x, float y, Texture imgLocation,int price, boolean isUnlocked) {
         this.game= game;
@@ -144,7 +150,8 @@ public class SpaceShip {
         this.price= price;
         this.isUnlocked= isUnlocked;
         t1 = new Thruster(game,x+50,y);
-
+        shootSound_01= Gdx.audio.newSound(Gdx.files.internal("Audio/pew.mp3"));
+        explode= Gdx.audio.newSound(Gdx.files.internal("Audio/explo.mp3"));
     }
 
 
@@ -229,7 +236,7 @@ public class SpaceShip {
         return mechaHealth;
     }
 
-    public void setMechaHealth(int mechaHealth) {
+    public void setMechaHealth(float mechaHealth) {
         this.mechaHealth = mechaHealth;
     }
 
@@ -289,17 +296,18 @@ public class SpaceShip {
 
     //getting damage
     public void gettingDamage(float damage) {
-        if (this.hasShield) {
-            this.mechaHealth -= (damage - (damage * (activeShip == 1 ? 0.1f : 0.2f)) - damage * this.shieldStrength);
-        } else {
-            this.mechaHealth -= (damage - (damage * (activeShip == 1 ? 0.1f : 0.2f)));
-        }
+        this.mechaHealth -= ((isHasShield())? 0: damage);
         if(mechaHealth<0){
+            explode.play(0.8f);
             this.isAlive=false;
+
             dispose();
         }
     }
 
+    public  void repairShip(float value){
+        this.mechaHealth+= value;
+    }
 
     //
     //ceate animation
@@ -317,11 +325,12 @@ public class SpaceShip {
     public void shoot(){
 
         if(isAlive){
+            shootSound_01.play();
             if(hasBeastMode){
-                bullets.add(new PlayerBullet(game,this.x+this.size/2,this.y+this.size/2,20,20,50,new Texture("image/effect/laser/4.png")));
+                bullets.add(new PlayerBullet(game,this.x+this.size/2-25,this.y+this.size/2,20,100,50,30,new Texture("image/effect/laser/14.png")));
             }else{
 
-                bullets.add(new PlayerBullet(game,this.x+25,this.y+this.size,20,100,80,new Texture("image/effect/laser/01.png" ) ));
+                bullets.add(new PlayerBullet(game,this.x+25,this.y+this.size,20,100,80,20,new Texture("image/effect/laser/01.png" ) ));
             }
         }
 
@@ -356,8 +365,7 @@ public class SpaceShip {
 
            if(b.isHit(e.bound)) {
                b.deactivate();
-                e.takeDamage(b.getDamageValue());
-
+                e.takeDamage(b.getDamageValue()*((hasBeastMode)?2:1));
 
            }
         }
@@ -385,6 +393,7 @@ public class SpaceShip {
     public  void dispose(){
         t1.dispose();
         this.img.dispose();
+        explode.dispose();
     }
 
 

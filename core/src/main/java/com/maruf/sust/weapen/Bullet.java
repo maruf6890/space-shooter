@@ -19,7 +19,7 @@ abstract class Bullet {
     private boolean isActive;
     private float damage;
 
-    public Bullet(Main game, float x, float y, float speedX, float speedY, float size) {
+    public Bullet(Main game, float x, float y, float speedX, float speedY, float size,float damage) {
         this.x = x;
         this.y = y;
         this.speedX = speedX;
@@ -28,16 +28,16 @@ abstract class Bullet {
         this.game = game;
         this.isActive = true;
         this.bound = new Rectangle(x, y, size, size);
-        this.damage=20;
+        this.damage=damage;
     }
 
-    public Bullet(Main game, float x, float y, float speedX, float speedY, float size, Texture img) {
-        this(game, x, y, speedX, speedY, size);
+    public Bullet(Main game, float x, float y, float speedX, float speedY, float size,float damage, Texture img) {
+        this(game, x, y, speedX, speedY, size,damage);
         this.img = img;
     }
 
-    public Bullet(Main game, float x, float y, float speedX, float speedY, float size, Animation<TextureRegion> bulletAnimation) {
-        this(game, x, y, speedX, speedY, size);
+    public Bullet(Main game, float x, float y, float speedX, float speedY, float size,float damage, Animation<TextureRegion> bulletAnimation) {
+        this(game, x, y, speedX, speedY, size,damage);
         this.bulletAnimation = bulletAnimation;
         isAnimated = true;
     }

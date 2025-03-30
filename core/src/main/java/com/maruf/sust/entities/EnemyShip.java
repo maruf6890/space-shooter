@@ -40,6 +40,7 @@ public abstract class EnemyShip {
         this.durability = durability;
         this.bound = new Rectangle((int) x, (int) y, (int) this.size, (int) this.size);
         startShooting();
+
     }
     public float getPoint(){return this.point;}
     public void setPoint(float p){this.point=p;}
@@ -74,7 +75,7 @@ public abstract class EnemyShip {
     public void isCollided() {
         if (this.bound.overlaps(game.alphaShip.bound)) {
             takeDamage(20f);
-            game.alphaShip.gettingDamage(20f);
+            game.alphaShip.gettingDamage(5);
 
         }
     }
@@ -110,7 +111,7 @@ public abstract class EnemyShip {
 
             if (b.isHit(game.alphaShip.bound)) {
                 game.alphaShip.gettingDamage(b.getDamageValue());
-                System.out.println("HIt");
+                System.out.println(b.getDamageValue());
                 iterator.remove();
                 continue;
 

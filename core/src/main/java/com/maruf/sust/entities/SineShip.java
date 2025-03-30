@@ -56,7 +56,7 @@ public class SineShip extends EnemyShip{
 
     @Override
     public void fireBullet() {
-        bullets.add(new EnemyBullet(game,this.x,this.y,80,50,new Texture("image/effect/laser/03.png")));
+        bullets.add(new EnemyBullet(game,this.x,this.y,80,50,3,new Texture("image/effect/laser/03.png")));
     }
 
 }

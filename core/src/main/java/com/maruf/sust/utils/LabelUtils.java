@@ -22,7 +22,7 @@ public class LabelUtils implements Disposable {
         font.getData().setScale(2f);
     }
 
-    // Method to create a label with text, position, and color
+
     public Label createLabel(String text, float x, float y, Color color) {
         LabelStyle labelStyle = new LabelStyle();
         labelStyle.font = font;
@@ -34,7 +34,7 @@ public class LabelUtils implements Disposable {
         return label;
     }
 
-    // Static method to create an image actor with texture and position
+
     public  Image createImage(Texture texture, float x, float y,float h,float w) {
         Image image = new Image(texture);
         image.setPosition(x, y);
@@ -42,14 +42,17 @@ public class LabelUtils implements Disposable {
         return image;
     }
 
-    // Static method to create a popup with slide up and fade-out effect
+
     public  Label createPopupWithEffect(final Label label, float duration, float slideDistance) {
         label.addAction(Actions.sequence(
-            Actions.moveBy(0, slideDistance, duration),  // Slide up effect
-            Actions.fadeOut(duration)  // Fade out effect
+            Actions.moveBy(0, slideDistance, duration),
+            Actions.fadeOut(duration)
         ));
         return label;
     }
+    //public image button
+
+    //
 
     @Override
     public void dispose() {

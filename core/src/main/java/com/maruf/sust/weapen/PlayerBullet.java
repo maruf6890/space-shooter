@@ -8,12 +8,12 @@ import com.maruf.sust.Main;
 
 public class PlayerBullet extends Bullet {
 
-    public PlayerBullet(Main game, float x, float y, float speedX, float speedY, float size, Texture img) {
-        super(game, x, y, speedX, speedY, size, img);
+    public PlayerBullet(Main game, float x, float y, float speedX, float speedY, float size,float damage, Texture img) {
+        super(game, x, y, speedX, speedY, size,damage, img);
     }
 
-    public PlayerBullet(Main game, float x, float y, float speedX, float speedY, float size, Animation<TextureRegion> bulletAnimation) {
-        super(game, x, y, speedX, speedY, size, bulletAnimation);
+    public PlayerBullet(Main game, float x, float y, float speedX, float speedY, float size,float damage, Animation<TextureRegion> bulletAnimation) {
+        super(game, x, y, speedX, speedY, size,damage, bulletAnimation);
     }
 
 

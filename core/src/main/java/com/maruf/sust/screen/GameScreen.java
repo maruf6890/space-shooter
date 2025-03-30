@@ -2,9 +2,11 @@ package com.maruf.sust.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -29,20 +31,22 @@ public class GameScreen implements Screen {
     private Stage stage;
     private LabelUtils labelUtils;
     private Label scoreLabel;
-    private Image hpBox;
+    private Texture heartTexture;
     public  float Score;
     Random rand = new Random();
-    //player
+
+    boolean isPowerExhist=false;
     SpaceShip ship;
     Texture test;
+    Music bgm;
 
 
     ArrayList<EnemyShip> enemy = new ArrayList<>();
-
+    LineTrails lineTrails;
     //Account
-    Account playerAccount;
-    public GameScreen(Main game,Account ac) {
-        playerAccount= ac;
+
+    public GameScreen(Main game) {
+
         this.game = game;
         bg1= new Background(game,"image/bg/space-2.png",100,0.2f);
         planets= new SpaceObjects(game,"planet",50,50);
@@ -56,9 +60,16 @@ public class GameScreen implements Screen {
         labelUtils= new LabelUtils();
         scoreLabel= labelUtils.createLabel("Score"+ Float.toString(game.currentScore),50,650, Color.BROWN);
         stage.addActor(scoreLabel);
-        hpBox= labelUtils.createImage(new Texture("image/gui/Main_UI/Health_Bar_Table.png"),game.WIDTH/2-50,650,20,100);
-        stage.addActor(hpBox);
+        heartTexture = new Texture("image/gui/Main_UI/heart.png");
+
+        System.out.println(game.alphaShip.getMechaHealth());
         this.Score=0;
+        createPower();
+        lineTrails= new LineTrails();
+        bgm= Gdx.audio.newMusic(Gdx.files.internal("Audio/game.mp3"));
+        bgm.setLooping(true);
+        bgm.setVolume(1);
+        bgm.play();
 
 
 
@@ -108,7 +119,7 @@ public class GameScreen implements Screen {
                 v.update(delta);
 
             } else {
-                iterator.remove(); // ✅ Safe removal
+                iterator.remove();
             }
         }
     }
@@ -126,6 +137,10 @@ public class GameScreen implements Screen {
         planets.controlObjectRender(delta);
         dusts.controlObjectRender(delta);
         stars.controlObjectRender(delta);
+        if(game.currentPowerUps!= null){
+            game.currentPowerUps.controlPowerUps(delta);
+        }
+
 
 
         game.batch.begin();
@@ -134,18 +149,68 @@ public class GameScreen implements Screen {
         dusts.renderObject();
         stars.renderObject();
         ship.renderShip(delta);
-        for(EnemyShip v: enemy){
+        if(ship.isHasShield()){
+            game.batch.draw(new Texture("image/ship/shield.png"),ship.x,ship.y,ship.size,ship.size);
+        }
+       for(EnemyShip v: enemy){
             v.render(delta);
             ship.destroyEnemy(v);
 
 
         }
 
+       if(game.currentPowerUps!= null){
+           game.currentPowerUps.renderPowerUps();
+       }
+
+
+        //game heart render
+        if(game.alphaShip.getMechaHealth()>=0) game.batch.draw(heartTexture,game.WIDTH/2-80,660,24,24);
+        if(game.alphaShip.getMechaHealth()>=20) game.batch.draw(heartTexture,game.WIDTH/2-46,660,24,24);
+        if(game.alphaShip.getMechaHealth()>=40) game.batch.draw(heartTexture,game.WIDTH/2-12,660,24,24);
+        if(game.alphaShip.getMechaHealth()>=60) game.batch.draw(heartTexture,game.WIDTH/2+22,660,24,24);
+        if(game.alphaShip.getMechaHealth()>=80) game.batch.draw(heartTexture,game.WIDTH/2+56,660,24,24);
+
+
         game.batch.end();
+        if(ship.isHasAcceleration())
+        {
+            lineTrails.updateAndRender();
+        }
         stage.act(delta);
         stage.draw();
+
     }
 
+    public void createPower(){
+       Timer.schedule(new Timer.Task() {
+           @Override
+           public void run() {
+
+               switch (rand.nextInt(4)){
+                   case 0:
+                       game.currentPowerUps= new TitanShield(game,new Texture("image/gui/Hangar/Armor_Icon.png")) ;
+                       break;
+
+                   case 1:
+                       game.currentPowerUps= new Repair(game,new Texture("image/gui/Hangar/HP_Icon.png")) ;
+
+                       break;
+                   case 2:
+                       game.currentPowerUps= new BeastMode(game,new Texture("image/gui/Hangar/Damage_Icon.png")) ;
+                       break;
+                   case 3:
+                       game.currentPowerUps= new SonicSpeed(game,new Texture("image/gui/Hangar/Speed_Icon.png")) ;
+                       lineTrails.createLine();
+                       break;
+               }
+
+
+           }
+       },5,30);
+
+
+    }
 
 
 
@@ -165,5 +230,6 @@ public class GameScreen implements Screen {
     public void dispose() {
     test.dispose();
     stage.dispose();
+    heartTexture.dispose();
     }
 }

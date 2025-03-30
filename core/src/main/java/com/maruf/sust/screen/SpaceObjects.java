@@ -71,7 +71,7 @@ public class SpaceObjects {
 
         for (int i = 0; i < objectList.size(); i++) {
             SpaceObject obj = objectList.get(i);
-            obj.y -= obj.speed * delta;
+            obj.y -= obj.speed * delta*game.speedMultiplayer;
             if (obj.y < 0) {
                 objectList.remove(i);
                 i--;

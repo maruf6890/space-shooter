@@ -32,7 +32,7 @@ public class Background {
 
     // Move backgrounds down and reset when out of bounds
     public void controlBg(float delta) {
-        float finalSpeed = baseSpeed * speedPercent;
+        float finalSpeed = baseSpeed * speedPercent*game.speedMultiplayer;
 
         y1 -= finalSpeed * delta;
         y2 -= finalSpeed * delta;

@@ -10,15 +10,15 @@ import com.maruf.sust.Main;
 public class EnemyBullet extends Bullet {
     private float directionX, directionY; // Direction towards player
     float shipX,shipY;
-    public EnemyBullet(Main game, float x, float y, float speed, float size, Texture img) {
-        super(game, x, y, 0, 0, size, img);
+    public EnemyBullet(Main game, float x, float y, float speed, float size,float damage, Texture img) {
+        super(game, x, y, 0, 0, size,damage, img);
         this.shipX=game.alphaShip.x;
         this.shipY= game.alphaShip.y;
         calculateDirection(x, y,shipX,shipY, speed);
     }
 
-    public EnemyBullet(Main game, float x, float y, float speed, float size, Animation<TextureRegion> bulletAnimation) {
-        super(game, x, y, 0, 0, size, bulletAnimation);
+    public EnemyBullet(Main game, float x, float y, float speed, float size,float damage, Animation<TextureRegion> bulletAnimation) {
+        super(game, x, y, 0, 0, size,damage, bulletAnimation);
         calculateDirection(x, y, game.alphaShip.x,game.alphaShip.y, speed);
     }
 

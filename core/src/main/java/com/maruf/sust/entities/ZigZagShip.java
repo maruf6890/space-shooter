@@ -50,7 +50,7 @@ public class ZigZagShip extends EnemyShip {
 
     @Override
     public void fireBullet() {
-        bullets.add(new EnemyBullet(game,this.x,this.y,80,50,new Texture("image/effect/laser/08.png")));
+        bullets.add(new EnemyBullet(game,this.x,this.y,80,50,5,new Texture("image/effect/laser/08.png")));
 
     }
 }
