@@ -9,7 +9,7 @@ import java.util.Random;
 public  abstract class PowerUps {
     Main game;
     String name;
-    int level;  // Not static so each power-up can have a unique level
+    int level;
     Texture img;
     float x, y;
     float speed;

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.maruf.sust.Main;
+import com.maruf.sust.screen.GameOverScreen;
 import com.maruf.sust.weapen.PlayerBullet;
 
 import java.util.ArrayList;
@@ -300,7 +301,7 @@ public class SpaceShip {
         if(mechaHealth<0){
             explode.play(0.8f);
             this.isAlive=false;
-
+            game.setScreen(new GameOverScreen(game));
             dispose();
         }
     }

@@ -230,6 +230,8 @@ public class GameScreen implements Screen {
     public void dispose() {
     test.dispose();
     stage.dispose();
+    bgm.pause();
+    bgm.dispose();
     heartTexture.dispose();
     }
 }
