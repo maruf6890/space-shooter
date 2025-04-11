@@ -2,7 +2,7 @@
 
 A 2D space shooter game made with **Java** and **LibGDX**. Blast through waves of enemy ships, dodge asteroids, and collect power-ups in a fast-paced arcade adventure.
 
-![Gameplay Screenshot](https://raw.githubusercontent.com/yourusername/SpaceShutter/main/screenshots/gameplay1.png)
+![Gameplay Screenshot](assets/image/ss/1.png)
 
 ---
 
@@ -39,7 +39,7 @@ A 2D space shooter game made with **Java** and **LibGDX**. Blast through waves o
 Clone the repository and run the game:
 
 ```bash
-git clone https://github.com/yourusername/SpaceShutter.git
+git clone https://github.com/maruf6890/space-shooter.git
 cd SpaceShutter
 ./gradlew desktop:run
 ```
@@ -75,7 +75,7 @@ SpaceShutter/
 
 ## 📸 Screenshots
 
-| Gameplay                           | Main Menu                      |
+| TITLE                              | Game                           |
 |------------------------------------|--------------------------------|
 | ![Gameplay](assets/image/ss/1.png) | ![Menu](assets/image/ss/2.png) |
 
