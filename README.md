@@ -75,9 +75,9 @@ SpaceShutter/
 
 ## 📸 Screenshots
 
-| Gameplay                                  | Main Menu |
-|-------------------------------------------|-----------|
-| ![Gameplay](assets/image/bg/gameover.jpg) | ![Menu](https://raw.githubusercontent.com/yourusername/SpaceShutter/main/screenshots/menu.png) |
+| Gameplay                           | Main Menu                      |
+|------------------------------------|--------------------------------|
+| ![Gameplay](assets/image/ss/1.png) | ![Menu](assets/image/ss/2.png) |
 
 ---
 
