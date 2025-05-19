@@ -43,7 +43,8 @@ public class TitleScreen implements Screen {
         loadingText = new BitmapFont();
 
         // Set the button's position
-        playBtn.setPosition(640 - playBtn.getWidth() / 2 + 10, 80);  // Center it on the screen
+        playBtn.setPosition(Gdx.graphics.getWidth()/2
+            - playBtn.getWidth() / 2 + 10, 80);  // Center it on the screen
 
         // Add button to the stage
         stage.addActor(playBtn);

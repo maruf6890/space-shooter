@@ -45,7 +45,7 @@ public class GameOverScreen implements Screen {
         restartButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.alphaShip= new SpaceShip(game,"Alpha Ship",300,0,120,0,0,new Texture("image/ship/ship5.png"),0,true);
+                game.alphaShip= new SpaceShip(game,"Alpha Ship",300,0,120,0,0,new Texture("image/ship/ship5.png"));
 
                 game.setScreen(new GameScreen(game)); // Switch to new game screen
                 dispose();

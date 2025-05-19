@@ -26,21 +26,19 @@ class LineTrail {
         int colorIndex = rand.nextInt(6);
         switch (colorIndex) {
             case 0:
-               // return new Color(0.7f, 0.4f, 0.9f, 0.6f); // Purple
                 return Color.WHITE;
             case 1:
                 return new Color(0.2f, 0.2f, 0.6f, 0.5f); // Blue
             case 2:
                 return Color.WHITE; // White
             case 3:
-                //return new Color(1.0f, 0.85f, 0.0f, 0.7f); // Yellow
                 return Color.WHITE;
             case 4:
-                return new Color(0.0f, 1.0f, 1.0f, 0.6f); // Cyan
+                return new Color(0.0f, 1.0f, 1.0f, 0.6f);
             case 5:
-                return new Color(0.8f, 0.1f, 0.1f, 0.6f); // Red
+                return new Color(0.8f, 0.1f, 0.1f, 0.6f);
             default:
-                return Color.WHITE; // Default to white
+                return Color.WHITE;
         }
     }
 

@@ -34,8 +34,8 @@ public class EnemyBullet extends Bullet {
         }
 
         // Assign computed speed values
-        this.speedX = directionX;
-        this.speedY = directionY;
+        this.speedX = directionX*5;
+        this.speedY = directionY*5;
     }
 
 

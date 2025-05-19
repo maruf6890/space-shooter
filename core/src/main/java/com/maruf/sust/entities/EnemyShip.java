@@ -65,9 +65,9 @@ public abstract class EnemyShip {
             game.currentScore+=10;
             game.currentCash+= 1000;
             onDestroy();
-            System.out.println("score" +game.currentScore);
+
         }
-        System.out.println(this.hp);
+
 
     }
 
@@ -111,7 +111,6 @@ public abstract class EnemyShip {
 
             if (b.isHit(game.alphaShip.bound)) {
                 game.alphaShip.gettingDamage(b.getDamageValue());
-                System.out.println(b.getDamageValue());
                 iterator.remove();
                 continue;
 

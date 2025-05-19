@@ -18,7 +18,7 @@ import java.util.Iterator;
 
 
 class Thruster {
-     Main game;
+    Main game;
     private Texture[] thrusterFrames;
     Animation<TextureRegion> thrusterAnimation;
     private float animationTime = 0f;
@@ -28,7 +28,7 @@ class Thruster {
         this.x = x;
         this.y = y;
         this.game= game;
-        // Load separate images
+
         thrusterFrames = new Texture[]{
             new Texture(Gdx.files.internal("image/ship/thruster/1/1.png")),
             new Texture(Gdx.files.internal("image/ship/thruster/1/2.png")),
@@ -36,14 +36,10 @@ class Thruster {
             new Texture(Gdx.files.internal("image/ship/thruster/1/4.png")),
             new Texture(Gdx.files.internal("image/ship/thruster/1/5.png"))
         };
-
-
         TextureRegion[] frames = new TextureRegion[thrusterFrames.length];
         for (int i = 0; i < thrusterFrames.length; i++) {
             frames[i] = new TextureRegion(thrusterFrames[i]);
         }
-
-        // Create the animation (0.1s per frame)
         thrusterAnimation = new Animation<>(0.1f, frames);
     }
      public void render() {
@@ -63,42 +59,23 @@ class Thruster {
 
 
     public void dispose() {
-
         for (Texture texture : thrusterFrames) {
             texture.dispose();
         }
     }
 }
-
-
-
-
 public class SpaceShip {
   public Texture img;
     Main game;
     // Ship Information
-    private final String name;
-    private static int activeShip;
-    //Texture test = new Texture("image/ship/ship5.png");
+    public final String name;
     public float x, y, size, speed;
     public Rectangle bound;
     Thruster t1;
     public boolean isAlive;
-
-    //Bullet
     ArrayList<PlayerBullet> bullets= new ArrayList<>();
-
-
-
-
-
-    private boolean isUnlocked;
-    private  int price;
-
-    // Acceleration
     private boolean hasAcceleration;
     private float sonicSpeed;
-    private float fuel;
 
     // Shield
     private float shieldStrength;
@@ -120,17 +97,10 @@ public class SpaceShip {
 
     //sound
     Sound shootSound_01,explode;
-
-    // Constructor
-
-    //
-
-    public SpaceShip(Main game,String name, int type, float speed, float size, float x, float y, Texture imgLocation,int price, boolean isUnlocked) {
+    public SpaceShip(Main game,String name, int type, float speed, float size, float x, float y, Texture imgLocation) {
         this.game= game;
         this.name = name;
-        this.activeShip = type;
         this.speed = speed;
-        this.fuel = 0;
         this.shieldStrength = 0;
         this.repair = 0;
         this.damage = 0;
@@ -148,8 +118,6 @@ public class SpaceShip {
         this.x = x;
         this.y = y;
         this.bound = new Rectangle(x, y, this.size, this.size);
-        this.price= price;
-        this.isUnlocked= isUnlocked;
         t1 = new Thruster(game,x+50,y);
         shootSound_01= Gdx.audio.newSound(Gdx.files.internal("Audio/pew.mp3"));
         explode= Gdx.audio.newSound(Gdx.files.internal("Audio/explo.mp3"));
@@ -160,22 +128,9 @@ public class SpaceShip {
         return name;
     }
 
-    public static int getActiveShip() {
-        return activeShip;
-    }
-
-    public void setActiveShip(int activeShip) {
-        SpaceShip.activeShip = activeShip;
-    }
 
 
-    public float getFuel() {
-        return fuel;
-    }
 
-    public void setFuel(float fuel) {
-        this.fuel = fuel;
-    }
 
     public float getShieldStrength() {
         return shieldStrength;
@@ -328,10 +283,10 @@ public class SpaceShip {
         if(isAlive){
             shootSound_01.play();
             if(hasBeastMode){
-                bullets.add(new PlayerBullet(game,this.x+this.size/2-25,this.y+this.size/2,20,100,50,30,new Texture("image/effect/laser/14.png")));
+                bullets.add(new PlayerBullet(game,this.x+this.size/2-25,this.y+this.size/2,20,300,50,30,new Texture("image/effect/laser/14.png")));
             }else{
 
-                bullets.add(new PlayerBullet(game,this.x+25,this.y+this.size,20,100,80,20,new Texture("image/effect/laser/01.png" ) ));
+                bullets.add(new PlayerBullet(game,this.x+25,this.y+this.size,80,300,80,20,new Texture("image/effect/laser/01.png" ) ));
             }
         }
 

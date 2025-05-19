@@ -87,7 +87,7 @@ public class RandomShip extends EnemyShip {
 
     @Override
     public void fireBullet() {
-        bullets.add(new EnemyBullet(game,this.x,this.y,80,50,5,new Texture("image/effect/laser/05.png")));
+        bullets.add(new EnemyBullet(game,this.x,this.y,80,50,5,new Texture("image/effect/laser/08.png")));
 
     }
 }
