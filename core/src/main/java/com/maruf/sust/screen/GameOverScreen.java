@@ -46,7 +46,9 @@ public class GameOverScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.alphaShip= new SpaceShip(game,"Alpha Ship",300,0,120,0,0,new Texture("image/ship/ship5.png"));
-
+                game.currentScore=0;
+                game.currentPowerUps=null;
+                music.pause();
                 game.setScreen(new GameScreen(game)); // Switch to new game screen
                 dispose();
             }
