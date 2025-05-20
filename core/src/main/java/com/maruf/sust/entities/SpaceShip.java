@@ -81,8 +81,6 @@ public class SpaceShip {
     private float shieldStrength;
     private boolean hasShield;
 
-
-
     // Repair
     private boolean hasRecovery;
     private float repair;

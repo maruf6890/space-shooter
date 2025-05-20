@@ -24,6 +24,7 @@ public abstract class EnemyShip {
     protected float damage;
     protected float durability;
     protected Rectangle bound;
+    protected boolean isVulnerable;
     public  ArrayList <EnemyBullet> bullets= new ArrayList<>();
 
 
@@ -39,6 +40,7 @@ public abstract class EnemyShip {
         this.isAlive = true;
         this.durability = durability;
         this.bound = new Rectangle((int) x, (int) y, (int) this.size, (int) this.size);
+        this.isVulnerable=true;
         startShooting();
 
     }
@@ -58,7 +60,10 @@ public abstract class EnemyShip {
 
     // Enemy takes damage
     public void takeDamage(float damage) {
-        hp -= damage;
+        if(!isVulnerable || !isOutOfScreen()){
+            hp -= damage;
+        }
+
 
         if (hp <= 0) {
             isAlive = false;

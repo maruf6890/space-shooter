@@ -48,7 +48,7 @@ public class ExplosionEffect {
     public void render(Batch batch) {
         if (!finished) {
             TextureRegion currentFrame = explosionAnimation.getKeyFrame(elapsedTime);
-            batch.draw(currentFrame, position.x, position.y);
+            batch.draw(currentFrame, position.x, position.y,currentFrame.getRegionWidth() * 2,currentFrame.getRegionHeight() * 2);
         }
     }
 

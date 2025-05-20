@@ -3,6 +3,7 @@ package com.maruf.sust.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -42,6 +43,8 @@ public class GameScreen implements Screen {
 
     //bgm and sound fx
     Music bgm;
+    Sound explode;
+
 
     //entity
     ArrayList<EnemyShip> enemy = new ArrayList<>();
@@ -76,6 +79,7 @@ public class GameScreen implements Screen {
         bgm.setLooping(true);
         bgm.setVolume(1);
         bgm.play();
+        explode= Gdx.audio.newSound(Gdx.files.internal("Audio/explo.mp3"));
     }
 
 
@@ -147,6 +151,15 @@ public class GameScreen implements Screen {
             game.alphaShip.destroyEnemy(v);
             if(!v.isAlive()){
                explotions.add(new ExplosionEffect(v.x,v.y)) ;
+               explode.play();
+            }
+        }
+        for (Iterator<EnemyShip> iterator = enemy.iterator(); iterator.hasNext(); ) {
+            EnemyShip e = iterator.next();
+
+            e.update(delta);
+            if (!e.isAlive()) {
+                iterator.remove();
             }
         }
         for(ExplosionEffect fx: explotions){
@@ -167,6 +180,13 @@ public class GameScreen implements Screen {
        if(game.currentPowerUps!= null){
            game.currentPowerUps.renderPowerUps();
        }
+       //boos
+
+        if(Boss.notSeenBefore && game.currentScore>=100f){
+            System.out.println("hi I am boss");
+            enemy.add(new Boss(game));
+            Boss.notSeenBefore=false;
+        }
         //game heart render
         if(game.alphaShip.getMechaHealth()>=0) game.batch.draw(heartTexture,game.WIDTH/2f-80,660,24,24);
         if(game.alphaShip.getMechaHealth()>=20) game.batch.draw(heartTexture,game.WIDTH/2f-46,660,24,24);

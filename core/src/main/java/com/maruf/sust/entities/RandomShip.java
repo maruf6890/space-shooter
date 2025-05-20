@@ -2,6 +2,7 @@ package com.maruf.sust.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.maruf.sust.Main;
+import com.maruf.sust.weapen.BossSpecialBullet;
 import com.maruf.sust.weapen.EnemyBullet;
 
 import java.util.Random;
@@ -90,4 +91,6 @@ public class RandomShip extends EnemyShip {
         bullets.add(new EnemyBullet(game,this.x,this.y,80,50,5,new Texture("image/effect/laser/08.png")));
 
     }
+
+
 }

@@ -30,7 +30,7 @@ public class SineShip extends EnemyShip{
         time += delta;
 
 
-        //this.x = (float) (this.axis- this.size  + waveAmplitude * Math.sin(time * waveSpeed));
+
 
         if(this.y>500){
             this.y -= speedY * delta * 60;

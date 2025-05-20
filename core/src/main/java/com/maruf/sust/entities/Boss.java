@@ -1,63 +1,62 @@
 package com.maruf.sust.entities;
 
-
 import com.badlogic.gdx.graphics.Texture;
 import com.maruf.sust.Main;
+import com.maruf.sust.weapen.BossSpecialBullet;
+import com.maruf.sust.weapen.EnemyBullet;
 
-public class Boss extends EnemyShip {
-    private float standTime = 5f; // Time in seconds that the boss will stand still
-    private float moveTime = 25f; // Time in seconds before moving backward
-    private float reappearTime = 5f; // Time in seconds before reappearing after moving backward
-    private float timePassed = 0f; // Time counter for the various states
-    private boolean isStanding = true; // To check if the boss is standing or moving
-    private boolean isMovingBackward = false; // To check if the boss is moving backward
+public class Boss extends EnemyShip{
+    Main game;
+    public static  boolean notSeenBefore=true;
 
-    public Boss(Main game, float x, float y, float size, float speedX, float speedY, float durability, Texture img) {
-        super(game, x, y, size, speedX, speedY, durability, img);
-        this.x = game.WIDTH / 2 - size / 2;  // Start in the center of the screen
-        this.y = game.HEIGHT - size;  // At the bottom of the screen
-        this.speedX = 0;  // Initially not moving horizontally
-        this.speedY = 0;  // Not moving vertically at the start
+
+    public Boss(Main game){
+
+        super(game,game.WIDTH/2-100,game.HEIGHT+100,100,20,0.3f,0.5f,new Texture("image/ship/ship8.png"));
+
+        this.game= game;
+        this.isAlive=true;
+        setPoint(10.5f);
+        setCash(1000);
+
     }
-
     @Override
     public void update(float delta) {
-        timePassed += delta;
 
-        if (isStanding) {
-            if (timePassed >= standTime) {
-                isStanding = false;  // Start moving after standing for some time
-                timePassed = 0f;  // Reset the timer
-            }
-        } else if (!isMovingBackward) {
-            if (timePassed >= moveTime) {
-                isMovingBackward = true;  // Start moving backward
-                timePassed = 0f;  // Reset the timer
-                speedX = -2f;  // Move backward (negative x direction)
-            }
-        } else {
-            if (timePassed >= reappearTime) {
-                isMovingBackward = false;  // Stop moving backward
-                isStanding = true;  // Stand again after reappearing
-                timePassed = 0f;  // Reset the timer
-                speedX = 0f;  // Stop horizontal movement
-            }
+
+
+
+        if(this.y>500){
+            this.y -= speedY * delta * 60;
+            this.bound.setPosition(this.x,this.y);
         }
 
-        x += speedX * delta * 60;  // Apply horizontal movement
 
-        if (timePassed >= 5f) {  // Shoot every 5 seconds
-            fireBullet();
-            timePassed = 0f;  // Reset the shooting timer
+
+        if (this.y< -this.size) {
+            isAlive = false;
         }
+        this.updateBulletsPosition(delta);
     }
 
     @Override
     public void render(float delta) {
-        game.batch.draw(img, this.x, this.y, this.size, this.size);  // Render the boss
+
+
+        if(isAlive()) game.batch.draw(img, this.x, this.y, size, size);
+        this.renderBullets(delta);
+
     }
 
     @Override
     public void fireBullet() {
-   }
+        bullets.add(new EnemyBullet(game,this.x,this.y,80,50,8,new Texture("image/effect/laser/12.png")));
+        fireSpecial();
+    }
+    public void fireSpecial() {
+        bullets.add(new BossSpecialBullet(game, x, y, 400, 32, 2, -90, new Texture("image/effect/laser/31.png")));
+        bullets.add(new BossSpecialBullet(game, x, y, 400, 32, 2, -75, new Texture("image/effect/laser/31.png")));
+        bullets.add(new BossSpecialBullet(game, x, y, 400, 32, 2, -105, new Texture("image/effect/laser/31.png")));
+    }
+
 }
